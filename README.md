@@ -147,7 +147,7 @@ If you want to add ssl for kibana web you should create ssl certificate using el
 
 Don't forget to enter your kibana's ip address
 ```bash
-sudo /usr/share/elasticsearch/bin/elasticsearch-certutil cert  -ca /etc/elasticsearch/elastic-stack-ca.p12 -name kibana-certificate -dns kibana01,<your_kibana's_ip>,127.0.0.1,localhost -ip <your_kibana's_ip> # Here we'll generate kibana certs to host kibana by https.
+sudo /usr/share/elasticsearch/bin/elasticsearch-certutil cert  -ca /etc/elasticsearch/elastic-stack-ca.p12 -name kibana-certificate -dns kibana01,<your_kibana_ip>,127.0.0.1,localhost -ip <your_kibana_ip> # Here we'll generate kibana certs to host kibana by https.
 sudo cp /usr/share/elasticsearch/kibana-certificate.p12 /usr/share/kibana/ # Copy certificate to the kibana's dir
 ```
 Then in the end of the `/etc/kibana/kibana.yml` add your certification info:
@@ -269,14 +269,15 @@ After enabling module suricata you'll need to configure filebeat.yml to add suri
 To add filebeat's dashboards to kibana first configure filebeat.yml
 ```bash
 sudo cp /etc/filebeat/filebeat.yml /etc/filebeat/filebeat.yml.bak # Making backup of config file
-sudo vi /etc/filebeat/filebeat.yml # Configure Elasticksearch Output with entering hosts, username: elastic and password that you can check with echo $ES_PASSWORD. Don't forget to uncomment protocol: https
+sudo vi /etc/filebeat/filebeat.yml # Configure Elasticksearch Output with entering hosts, username: elastic and password that you can check with echo $ES_PASSWORD.
+# Don't forget to uncomment protocol: https
 ```
 Then upload index and dashboards
 
 Don't forget to enter your kibana's ip address
 ```bash
 sudo filebeat setup --index-management #Upload index templates
-sudo filebeat setup --dashboards -E setup.kibana.host=<your_kibana's_ip>:5601
+sudo filebeat setup --dashboards -E setup.kibana.host=<your_kibana_ip>:5601
 ```
 After setting up dashboard reconfigure filebeat.yml to work with logstash
 ```
