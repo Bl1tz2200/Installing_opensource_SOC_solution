@@ -280,11 +280,11 @@ sudo filebeat setup --index-management #Upload index templates
 sudo filebeat setup --dashboards -E setup.kibana.host=<your_kibana_ip>:5601
 ```
 After setting up dashboard reconfigure filebeat.yml to work with logstash
-```
+```bash
 sudo vi /etc/filebeat/filebeat.yml # Go back, comment all, what you've configured in Elasticksearch Output and uncomment Logstash Output with hosts
 ```
 In the end enable and start filebeat. After starting in kibana's web you can see dashboards, check if \[Filebeat System\] Syslog dashboard ECS works
-```
+```bash
 sudo filebeat setup -e
 sudo systemctl start filebeat
 sudo systemctl enable filebeat
