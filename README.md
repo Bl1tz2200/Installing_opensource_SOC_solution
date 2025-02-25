@@ -299,7 +299,7 @@ Minimum 10 character password and must contain at least one uppercase letter, on
 
 Then install opensearch for arkime
 ```bash
-wget https://artifacts.opensearch.org/releases/bundle/opensearch/2.13.0/opensearch-2.13.0-linux-x64.deb # Web-side
+wget https://artifacts.opensearch.org/releases/bundle/opensearch/2.13.0/opensearch-2.13.0-linux-x64.deb
 sudo dpkg -i opensearch-2.13.0-linux-x64.deb
 ```
 When installing is done configure opensearch
