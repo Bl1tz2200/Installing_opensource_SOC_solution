@@ -507,7 +507,9 @@ Then start logrotate
 logrotate -d /etc/logrotate.d/*.conf
 ```
 # Additions
-If you want to see and analyse net traffic from your linux agent you should use iptables -j TEE:
+If you want to see and analyse net traffic from your linux agent you should use iptables -j TEE
+
+Don't forget to enter your SOC server ip address
 ```bash
 sudo iptables -t mangle -A INPUT -j TEE --gateway <your_SOC_server_ip>
 ```
