@@ -478,15 +478,15 @@ I'll create logrotate for syslog file and suricata's logs
 ```
 sudo apt install logrotate -y
 
-cat << EOF | sudo tee /etc/logrotate.d/syslog # Syslog rotate separately from rsyslog. Rotate if it reaches 4 GB, check every hour and store last 4 copies
+cat << EOF | sudo tee /etc/logrotate.d/syslog # Syslog rotate separately from rsyslog. Rotate if it reaches 9 GB or file is older that 1 hour and store last 2 copies
 su root syslog
 
 /var/log/syslog
 {
 	hourly
 	create
-	rotate 4
-	size 4G
+	rotate 2
+	size 9G
 	nocompress
 	notifempty
 	sharedscripts
@@ -496,7 +496,7 @@ su root syslog
 }
 EOF
 
-cat << EOF | sudo tee /etc/logrotate.d/suricata # Suricata rotate every week and store 3 copies
+cat << EOF | sudo tee /etc/logrotate.d/suricata # Suricata rotate if file is older than one week and store 3 copies
 /var/log/suricata/*.log /var/log/suricata/*.json
 {
 	weekly
