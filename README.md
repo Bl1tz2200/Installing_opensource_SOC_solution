@@ -360,10 +360,16 @@ I'll recommend to add inside <syscheck> in `/var/ossec/etc/ossec.conf` 2 lines: 
 <alert_new_files>yes</alert_new_files>
 ```
 
-And I'll recomend to change remove 1003 syslog rule, that checks number of chars in one line of the log in /var/log/syslog. It can cause syslog spam because logstash often creates long logs. 
+And I'll recomend to change remove 1003 syslog rule, that checks number of chars in one line of the log in /var/log/syslog. It can cause syslog spam because logstash often creates long logs. I'll recoment to remove rule 1002 too because it checks error word inside syslog file and mistakenly triggered by normal logstash logs (or you can change BAD_WORDS var, but it can still be mistakenly triggered)
 
-Rule to remove is in `/var/ossec/rules/syslog_rules.xml` and it looks like that:
+Rules to remove is in `/var/ossec/rules/syslog_rules.xml` and it looks like that:
 ```
+<rule id="1002" level="2">
+    <pcre2>$BAD_WORDS</pcre2>
+    <options>alert_by_email</options>
+    <description>Unknown problem somewhere in the system.</description>
+</rule>
+
 <rule id="1003" level="13" maxsize="1025">
     <description>Non standard syslog message (size too large).</description>
 </rule>
