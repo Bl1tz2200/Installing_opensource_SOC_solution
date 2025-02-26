@@ -471,13 +471,15 @@ sudo /var/ossec/bin/ossec-control restart # Restartting OSSEC
 ***To add OSSEC in kibana web: Stack Management => Data views => Create data view - Index pattern: logs-generic-* (Name you'll use to find this data view)=> Save data view to Kibana. Then create own dashboard using Data view of OSSEC.**
 
 # Logrotate
-To prevend from getting out of space I'll create logrotate files, that will split file into different archives and older of them will be removed.
+To prevend from getting out of space I'll create logrotate files, that will split file into different archives and older of them will be removed. By default lograte rotates many logs such as arkime log.
 
 I'll create logrotate for syslog file and suricata's logs
 ```
 sudo apt install logrotate -y
 
-cat << EOF | sudo tee /etc/logrotate.d/syslog.conf # Syslog rotate if it reaches 4 GB, check every hour and store last 4 copies
+cat << EOF | sudo tee /etc/logrotate.d/syslog # Syslog rotate if it reaches 4 GB, check every hour and store last 4 copies
+su root syslog
+
 /var/log/syslog {
 hourly
 create
@@ -487,7 +489,7 @@ nocompress
 }
 EOF
 
-cat << EOF | sudo tee /etc/logrotate.d/suricata.conf # Suricata rotate every week and store 3 copies
+cat << EOF | sudo tee /etc/logrotate.d/suricata # Suricata rotate every week and store 3 copies
 /var/log/suricata/*.log /var/log/suricata/*.json
 {
 	weekly
@@ -501,10 +503,41 @@ cat << EOF | sudo tee /etc/logrotate.d/suricata.conf # Suricata rotate every wee
 	endscript
 }
 EOF
+
+
+cat << EOF | sudo tee /etc/logrotate.d/rsyslog # Changing existing rotate file to remove /etc/syslog from it
+su root syslog
+
+/var/log/mail.info
+/var/log/mail.warn
+/var/log/mail.err
+/var/log/mail.log
+/var/log/daemon.log
+/var/log/kern.log
+/var/log/auth.log
+/var/log/user.log
+/var/log/lpr.log
+/var/log/cron.log
+/var/log/debug
+/var/log/messages
+{
+        rotate 4
+        weekly
+        missingok
+        notifempty
+        compress
+        delaycompress
+        sharedscripts
+        postrotate
+                /usr/lib/rsyslog/rsyslog-rotate
+        endscript
+}
+EOF    
 ```
-Then start logrotate
+Then check logrotate with running debug and run first rotate
 ```bash
-logrotate -d /etc/logrotate.d/*.conf
+sudo logrotate -d /etc/logrotate.d/*
+sudo logrotate -v /etc/logrotate.d/*
 ```
 # Additions
 If you want to see and analyse net traffic from your linux agent you should use iptables -j TEE
