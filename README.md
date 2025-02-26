@@ -545,6 +545,16 @@ Then check logrotate with running debug and run first rotate
 sudo logrotate -d /etc/logrotate.d/*
 sudo logrotate -v /etc/logrotate.d/*
 ```
+After all add logrotate to the sudo cron for making rotate evere hour
+
+Run
+```bash
+sudo crontab -e
+```
+And add
+```
+0 * * * * /etc/cron.daily/logrotate
+```
 # Additions
 If you want to see and analyse net traffic from your linux agent you should use iptables -j TEE
 
