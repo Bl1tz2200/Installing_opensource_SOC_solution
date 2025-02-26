@@ -545,9 +545,7 @@ Then check logrotate with running debug and run first rotate
 sudo logrotate -d /etc/logrotate.d/*
 sudo logrotate -v /etc/logrotate.d/*
 ```
-After all add logrotate to the sudo cron for making rotate evere hour
-
-Run
+After all add logrotate to the sudo cron for making rotate every hour. Run:
 ```bash
 sudo crontab -e
 ```
