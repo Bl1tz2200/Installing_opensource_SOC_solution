@@ -262,9 +262,10 @@ Create pipeline for suricata
 ```bash
 sudo filebeat setup --pipelines --modules suricata
 ```
-After enabling module suricata you'll need to configure filebeat.yml to add suricata's log. You should add in `filebeat.inputs` part in `paths` var these line:
+After enabling module suricata you'll need to configure filebeat.yml to add suricata's log. You should add in `filebeat.inputs` part in `paths` var these lines:
 ```bash
 - /var/log/suricata/eve.json
+- /var/log/*.log.*
 ```
 To add filebeat's dashboards to kibana first configure filebeat.yml
 ```bash
