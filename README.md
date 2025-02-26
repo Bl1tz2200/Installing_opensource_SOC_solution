@@ -118,6 +118,13 @@ curl -X PUT -u elastic:"${ES_PASSWORD}" "https://localhost:9200/_cluster/setting
   }
 }'
 ```
+To remove writing block if you've reached watermark you should set read_only_allow_delete to null, but if you haven't cleared your storage, elasticsearch will return read_only_allow_delete to true state
+```bash
+curl -X PUT -u elastic:"${ES_PASSWORD}" "https://localhost:9200/*/_settings?expand_wildcards=all&pretty" -H 'Content-Type: application/json' -d'
+{                                                                                                           
+  "index.blocks.read_only_allow_delete": null                                                               
+}'
+```
 
 
 # Kibana
@@ -478,14 +485,14 @@ I'll create logrotate for syslog file and suricata's logs
 ```
 sudo apt install logrotate -y
 
-cat << EOF | sudo tee /etc/logrotate.d/syslog # Syslog rotate separately from rsyslog. Rotate if it reaches 9 GB or file is older that 1 hour and store last 2 copies
+cat << EOF | sudo tee /etc/logrotate.d/syslog # Syslog rotate separately from rsyslog. Rotate if it reaches 9 GB or file is older that 1 hour and store 1 copy
 su root syslog
 
 /var/log/syslog
 {
 	hourly
 	create
-	rotate 2
+	rotate 1
 	size 9G
 	nocompress
 	notifempty
