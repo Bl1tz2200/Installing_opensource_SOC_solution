@@ -552,7 +552,7 @@ sudo crontab -e
 ```
 And add
 ```
-0 * * * * /etc/cron.daily/logrotate
+0 * * * * logrotate -v /etc/logrotate.d/*
 ```
 # Additions
 If you want to see and analyse net traffic from your linux agent you should use iptables -j TEE
