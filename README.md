@@ -477,15 +477,21 @@ I'll create logrotate for syslog file and suricata's logs
 ```
 sudo apt install logrotate -y
 
-cat << EOF | sudo tee /etc/logrotate.d/syslog # Syslog rotate if it reaches 4 GB, check every hour and store last 4 copies
+cat << EOF | sudo tee /etc/logrotate.d/syslog # Syslog rotate separately from rsyslog. Rotate if it reaches 4 GB, check every hour and store last 4 copies
 su root syslog
 
-/var/log/syslog {
-hourly
-create
-rotate 4
-size 4G
-nocompress
+/var/log/syslog
+{
+	hourly
+	create
+	rotate 4
+	size 4G
+	nocompress
+	notifempty
+	sharedscripts
+        postrotate
+                /usr/lib/rsyslog/rsyslog-rotate
+        endscript
 }
 EOF
 
