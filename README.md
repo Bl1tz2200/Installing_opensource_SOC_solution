@@ -553,7 +553,7 @@ Then check logrotate with running debug and run first rotate
 sudo logrotate -d /etc/logrotate.d/*
 sudo logrotate -v /etc/logrotate.d/*
 ```
-After all add logrotate to the sudo cron for checking if rotate is needed every minute. Run:
+After all add logrotate to the sudo cron for checking every minute if rotate is needed. Run:
 ```bash
 sudo crontab -e
 ```
