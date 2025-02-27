@@ -485,15 +485,15 @@ I'll create logrotate for syslog file and suricata's logs
 ```
 sudo apt install logrotate -y
 
-cat << EOF | sudo tee /etc/logrotate.d/syslog # Syslog rotate separately from rsyslog. Rotate if it reaches 9 GB or file is older that 1 hour and store 1 copy
+cat << EOF | sudo tee /etc/logrotate.d/syslog # Syslog rotate separately from rsyslog. Rotate if it reaches 10 GB or file is older that 1 hour and store 2 copy
 su root syslog
 
 /var/log/syslog
 {
 	hourly
 	create
-	rotate 1
-	size 9G
+	rotate 2
+	size 10G
 	nocompress
 	notifempty
 	sharedscripts
@@ -553,13 +553,13 @@ Then check logrotate with running debug and run first rotate
 sudo logrotate -d /etc/logrotate.d/*
 sudo logrotate -v /etc/logrotate.d/*
 ```
-After all add logrotate to the sudo cron for making rotate every hour. Run:
+After all add logrotate to the sudo cron for checking if rotate is needed every minute. Run:
 ```bash
 sudo crontab -e
 ```
 And add
 ```
-0 * * * * logrotate -v /etc/logrotate.d/*
+* * * * * logrotate -v /etc/logrotate.d/*
 ```
 # Additions
 If you want to see and analyse net traffic from your linux agent you should use iptables -j TEE
