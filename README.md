@@ -485,15 +485,15 @@ I'll create logrotate for syslog file and suricata's logs
 ```
 sudo apt install logrotate -y
 
-cat << EOF | sudo tee /etc/logrotate.d/syslog # Syslog rotate separately from rsyslog. Rotate if it reaches 10 GB or file is older that 1 hour and store 2 copy
+cat << EOF | sudo tee /etc/logrotate.d/syslog # Syslog rotate separately from rsyslog. Rotate if it reaches 5 GB or file is older that 1 hour and store 3 copy
 su root syslog
 
 /var/log/syslog
 {
 	hourly
 	create
-	rotate 2
-	size 10G
+	rotate 3
+	size 5G
 	nocompress
 	notifempty
 	sharedscripts
