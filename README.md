@@ -323,7 +323,7 @@ sudo systemctl start opensearch
 ```
 Opensearch may not start from the systemctl. To start it manually run:
 ```bash
-sudo -u opensearch /usr/share/opensearch/bin/opensearch
+sudo -u opensearch /usr/share/opensearch/bin/opensearch -d
 ```
 Next install arkime if opensearch has started correct:
 ```bash
@@ -566,10 +566,19 @@ And add
 ```
 * * * * * logrotate -v /etc/logrotate.d/*
 ```
+
+
 # Additions
 If you want to see and analyse net traffic from your linux agent you should use iptables -j TEE
 
 Don't forget to enter your SOC server ip address
 ```bash
 sudo iptables -t mangle -A INPUT -j TEE --gateway <your_SOC_server_ip>
+```
+
+# Run after restart
+After restarting your SOC all systems should start automatically but arkime can not. I'll recomment to check state of all systems. To run arkime manually:
+```bash
+sudo -u opensearch /usr/share/opensearch/bin/opensearch -d # Starting opensearch manually
+sudo systemctl restart arkimeviewer arkimecapture # Restarting arkime services
 ```
