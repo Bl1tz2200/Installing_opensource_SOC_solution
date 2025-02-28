@@ -321,9 +321,9 @@ Now enable and run opensearch
 sudo systemctl enable opensearch
 sudo systemctl start opensearch
 ```
-Opensearch may not start from the systemctl. To start it manually run:
+Opensearch may not start from the systemctl. To start it manually with debug mode run:
 ```bash
-sudo -u opensearch /usr/share/opensearch/bin/opensearch -d
+sudo -u opensearch /usr/share/opensearch/bin/opensearch -q # Or use -d for daemon mode to run on background
 ```
 Next install arkime if opensearch has started correct:
 ```bash
@@ -579,6 +579,6 @@ sudo iptables -t mangle -A INPUT -j TEE --gateway <your_SOC_server_ip>
 # Run after restart
 After restarting your SOC all systems should start automatically but arkime may not. I'll recomment to check state of all systems. To run arkime manually:
 ```bash
-sudo -u opensearch /usr/share/opensearch/bin/opensearch -d # Starting opensearch manually
+sudo -u opensearch /usr/share/opensearch/bin/opensearch -d # Starting opensearch manually as daemon
 sudo systemctl restart arkimeviewer arkimecapture # Restarting arkime services
 ```
