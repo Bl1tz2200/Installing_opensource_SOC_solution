@@ -577,7 +577,7 @@ sudo iptables -t mangle -A INPUT -j TEE --gateway <your_SOC_server_ip>
 ```
 
 # Run after restart
-After restarting your SOC all systems should start automatically but arkime can not. I'll recomment to check state of all systems. To run arkime manually:
+After restarting your SOC all systems should start automatically but arkime may not. I'll recomment to check state of all systems. To run arkime manually:
 ```bash
 sudo -u opensearch /usr/share/opensearch/bin/opensearch -d # Starting opensearch manually
 sudo systemctl restart arkimeviewer arkimecapture # Restarting arkime services
