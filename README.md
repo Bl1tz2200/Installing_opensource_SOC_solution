@@ -239,6 +239,7 @@ output {
 }
 EOF
 
+sudo systemctl enable logstash
 sudo systemctl start logstash
 ```
 
@@ -320,7 +321,11 @@ Now enable and run opensearch
 sudo systemctl enable opensearch
 sudo systemctl start opensearch
 ```
-If opensearch have started correct install arkime
+Opensearch may not start from the systemctl. To start it manually run:
+```bash
+sudo -u opensearch /usr/share/opensearch/bin/opensearch
+```
+Next install arkime if opensearch has started correct:
 ```bash
 sudo apt update -y
 sudo apt install -y wget iproute2 ethtool
