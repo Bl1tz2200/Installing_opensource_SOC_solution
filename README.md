@@ -78,31 +78,7 @@ sudo openssl s_client -showcerts -connect localhost:9200 < /dev/null | sed -ne '
 sudo cp ca.crt /usr/local/share/ca-certificates/
 sudo update-ca-certificates
 ```
-Let's configure rollover to update old indexes, that's reaches 2 GB size or older, that 1 day
-```bash
-curl -X PUT -u elastic:"${ES_PASSWORD}" "https://localhost:9200/_ilm/policy/stream_policy?pretty" -H 'Content-Type: application/json' -d'
-{
-  "policy": {                       
-    "phases": {
-      "hot": {                      
-        "actions": {                             
-          "rollover": {             
-            "max_size": "2GB",
-            "max_age": "1d"
-          }
-        }
-      },
-      "delete": {
-        "min_age": "1d",           
-        "actions": {
-          "delete": {}              
-        }
-      }
-    }
-  }
-}'
-```
-And I'll configure watermark limits to make more space for logs
+I'll configure watermark limits (when elastic stops to write data to prevent disk space flood) to make more space for logs
 ```bash
 curl -X PUT -u elastic:"${ES_PASSWORD}" "https://localhost:9200/_cluster/settings?pretty" -H 'Content-Type: application/json' -d'
 {
@@ -125,6 +101,13 @@ curl -X PUT -u elastic:"${ES_PASSWORD}" "https://localhost:9200/*/_settings?expa
   "index.blocks.read_only_allow_delete": null                                                               
 }'
 ```
+And I'll definitely reccomend to configure your rollover policies to create next indexes and remove older ones. 
+
+You can do that from Kibana's web interface in `Management => StackManagement => Data => Index Lifecycle Policies`.
+
+By default rollover policies is to create new index if older ones is 30 day old or has 50 GB size without removing older indexes. If you don't change rollover policies you can get out of memory.
+
+**You should configure rollover policies after Filebeat and OSSEC blocks, because after them will be created indexes**
 
 
 # Kibana
