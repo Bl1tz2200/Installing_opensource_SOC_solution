@@ -1,12 +1,13 @@
 # Installing_opensource_SOC_solution
 I've made the instruction, that will help you with installing your own Security Operations Center consisting of opensourse systems. 
 
+
 SOC's solution made by these opensource systems:
 - SIEM (Security Information and Event Management) as ELK Stack (Elasticsearch, Kibana, Logstash) + Suricata
 - NTA (Network Traffic Analysis) as Opensearch + Arkime
 - EDR (Endpoint Detection and Response) as OSSEC
 - Other utilites, such as filebeat, logrotate, iptables to make SOC more useful
-
+  
 
 # Select the host operating system
 I'll be using Ubuntu 22.04, but you can take any other version. In the installation I'll be using packages, that's actual for ubuntu 22.04. 
@@ -45,6 +46,12 @@ And run Suricata with entering interface that it will listen to
 ```bash
 sudo suricata -c /etc/suricata/suricata.yaml -i <your_interface> # Runs suricata
 ```
+
+
+# ELK arhitecture
+ELK stack arhitecture blueprint that will be made:
+
+![ELK arhitecture blueprint](https://github.com/user-attachments/assets/b57faac5-9812-4135-980d-b6c4569f2862)
 
 
 # Elasticsearch
