@@ -51,7 +51,7 @@ sudo suricata -c /etc/suricata/suricata.yaml -i <your_interface> # Runs suricata
 # ELK arhitecture
 ELK stack arhitecture blueprint that will be made:
 
-![ELK arhitecture blueprint](https://github.com/user-attachments/assets/a9ad4aa7-2cd6-4c7e-94eb-05adceaf7b72)
+![ELK arhitecture blueprint](https://github.com/user-attachments/assets/9ed84cd7-bb0c-43a6-b705-44541a369009)
 
 
 # Elasticsearch
