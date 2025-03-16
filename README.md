@@ -238,7 +238,17 @@ Now let's configure modules that will be used in filebeat. As for me it is syste
 Enable module system
 ```bash
 sudo filebeat modules enable system
-sudo vi /etc/filebeat/modules.d/system.yml # Set true on enabled of syslog and auth if it's not
+sudo vi /etc/filebeat/modules.d/system.yml # Set true on enabled of syslog and auth if it's not and set syslog with auth paths
+```
+Example of `/etc/filebeat/modules.d/system.yml`:
+```bash
+- module: system
+  syslog:
+    enabled: true
+    var.paths: ["/path/to/log/syslog*"]
+  auth:
+    enabled: true
+    var.paths: ["/path/to/log/auth.log*"]                                    
 ```
 Create pipeline for system
 ```bash
@@ -247,7 +257,14 @@ sudo filebeat setup --pipelines --modules system
 Enable module suricata
 ```bash
 sudo filebeat modules enable suricata
-sudo vi /etc/filebeat/modules.d/suricata.yml # Set true on enabled of eve and add var.paths: ["/var/log/suricata/eve.json"]
+sudo vi /etc/filebeat/modules.d/suricata.yml # Set true on enabled of eve and add eve.json path
+```
+Example of `/etc/filebeat/modules.d/suricata.yml`:
+```bash
+- module: suricata
+  eve:
+    enabled: true
+    var.paths: ["/var/log/suricata/eve.json*"]
 ```
 Create pipeline for suricata
 ```bash
