@@ -252,10 +252,10 @@ Example of `/etc/filebeat/modules.d/system.yml`:
 - module: system
   syslog:
     enabled: true
-    var.paths: ["/path/to/log/syslog*"]
+    var.paths: ["/var/log/syslog*"]
   auth:
     enabled: true
-    var.paths: ["/path/to/log/auth.log*"]                                    
+    var.paths: ["/var/log/auth.log*"]                                    
 ```
 Create pipeline for system
 ```bash
